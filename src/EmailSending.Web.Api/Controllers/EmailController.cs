@@ -28,7 +28,8 @@ namespace EmailSending.Web.Api.Controllers
             var guid = Guid.NewGuid();
             try
             {
-                await _emailOrchestrator.SendEmail(new Email(guid, dto.To, dto.CC, dto.BCC, dto.Subject, dto.Body));
+                await _emailOrchestrator.SendEmail(new Email(guid.ToString(), dto.To, dto.CC, dto.BCC, dto.Subject,
+                    dto.Body));
                 return new OkObjectResult(new {guid});
             }
             catch (Exception ex)

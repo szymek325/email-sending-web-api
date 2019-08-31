@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -7,9 +6,9 @@ namespace EmailSending.Web.Api.DataAccess.Entities
 {
     public class Email
     {
-        public Email(Guid id, IList<string> to, IList<string> cc, IList<string> bcc, string subject, string body)
+        public Email(string id, IList<string> to, IList<string> cc, IList<string> bcc, string subject, string body)
         {
-            Id = id.ToString();
+            Id = id;
             To = to;
             CC = cc;
             BCC = bcc;
@@ -26,5 +25,6 @@ namespace EmailSending.Web.Api.DataAccess.Entities
         public IList<string> BCC { get; set; }
         public string Subject { get; set; }
         public string Body { get; set; }
+        public bool Success { get; set; }
     }
 }
