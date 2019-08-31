@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailSending.Web.Api", "src\EmailSending.Web.Api\EmailSending.Web.Api.csproj", "{C520F70E-A580-45EB-AE8D-4BE20D97C0FE}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{257D6631-44B0-410C-A1BD-F9B6753A3572}"
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "src\docker-compose.dcproj", "{257D6631-44B0-410C-A1BD-F9B6753A3572}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -19,3 +19,4 @@
 /bin/Debug
 /src/EmailSending.Web.Api/bin/Debug/netcoreapp3.0
 /src/EmailSending.Web.Api/obj
+/src/obj/Docker
