@@ -24,9 +24,9 @@ namespace EmailSending.Web.Api.Configuration
                     description.GroupName,
                     new OpenApiInfo
                     {
-                        Title = $"Rental Web API {description.ApiVersion}",
+                        Title = $"Email Web API {description.ApiVersion}",
                         Version = description.ApiVersion.ToString(),
-                        Description = "Boardgame rental shop web api",
+                        Description = "Email sending web api",
                         Contact = new OpenApiContact
                         {
                             Name = "Mateusz Szymkowiak",

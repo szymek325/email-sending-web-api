@@ -1,6 +1,6 @@
 using System;
 
-namespace EmailSending.Web.Api
+namespace EmailSending.Web.Api.Dto
 {
     public class WeatherForecast
     {
