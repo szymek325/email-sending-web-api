@@ -15,3 +15,7 @@
 /tests/Rental.Core.Tests/obj
 /tests/Rental.DataAccess.Tests/bin/Debug/netcoreapp3.0
 /tests/Rental.DataAccess.Tests/obj
+/obj
+/bin/Debug
+/src/EmailSending.Web.Api/bin/Debug/netcoreapp3.0
+/src/EmailSending.Web.Api/obj
