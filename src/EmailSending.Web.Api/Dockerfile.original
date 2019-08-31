@@ -5,10 +5,10 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0-buster AS build
 WORKDIR /src
-COPY ["src/EmailSending.Web.Api/EmailSending.Web.Api.csproj", "src/EmailSending.Web.Api/"]
-RUN dotnet restore "src/EmailSending.Web.Api/EmailSending.Web.Api.csproj"
+COPY ["EmailSending.Web.Api/EmailSending.Web.Api.csproj", "EmailSending.Web.Api/"]
+RUN dotnet restore "EmailSending.Web.Api/EmailSending.Web.Api.csproj"
 COPY . .
-WORKDIR "/src/src/EmailSending.Web.Api"
+WORKDIR "/src/EmailSending.Web.Api"
 RUN dotnet build "EmailSending.Web.Api.csproj" -c Release -o /app
 
 FROM build AS publish
