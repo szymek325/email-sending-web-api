@@ -1,4 +1,8 @@
 using EmailSending.Web.Api.Configuration;
+using EmailSending.Web.Api.DataAccess.Entities;
+using EmailSending.Web.Api.Services;
+using EmailSending.Web.Api.Validators;
+using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
@@ -34,6 +38,8 @@ namespace EmailSending.Web.Api
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
             services.AddSwaggerGen();
 
+            services.AddTransient<IValidator<Email>, EmailValidator>();
+            services.AddTransient<IEmailOrchestrator, EmailOrchestrator>();
             RegisterDbContext(services);
         }
 
