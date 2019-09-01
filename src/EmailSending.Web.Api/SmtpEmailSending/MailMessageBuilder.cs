@@ -15,6 +15,7 @@ namespace EmailSending.Web.Api.SmtpEmailSending
         {
             var mailMessage = new MailMessage();
             email.To.ToList().ForEach(x => mailMessage.To.Add(new MailAddress(x)));
+            mailMessage.From = new MailAddress(email.From);
             email.CC.ToList().ForEach(x => mailMessage.CC.Add(new MailAddress(x)));
             email.BCC.ToList().ForEach(x => mailMessage.Bcc.Add(new MailAddress(x)));
             mailMessage.Subject = email.Subject;

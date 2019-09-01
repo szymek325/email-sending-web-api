@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using EmailSending.Web.Api.Services;
 using EmailSending.Web.Api.Validation;
 using FluentAssertions;
 using FluentValidation.Results;

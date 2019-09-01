@@ -3,9 +3,9 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>257d6631-44b0-410c-a1bd-f9b6753a3572</ProjectGuid>
+    <ProjectGuid>0294ac87-f273-4b03-b082-89c692245fda</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/api/values</DockerServiceUrl>
+    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
     <DockerServiceName>emailsending.web.api</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>

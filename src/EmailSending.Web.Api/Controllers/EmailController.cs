@@ -33,7 +33,8 @@ namespace EmailSending.Web.Api.Controllers
             var guid = Guid.NewGuid();
             try
             {
-                await _requestOrchestrator.SendEmail(new Email(guid.ToString(), dto.To, dto.CC, dto.BCC, dto.Subject,
+                await _requestOrchestrator.SendEmail(new Email(guid.ToString(), dto.To, dto.From, dto.CC, dto.BCC,
+                    dto.Subject,
                     dto.Body));
                 return new OkObjectResult(new {guid});
             }

@@ -28,6 +28,7 @@ namespace EmailSending.Web.Api.SmtpEmailSending
             var mailMessage = _mailMessageBuilder.Create(email);
             var smtpClient = new SmtpClient(_smtpConfiguration.Value.Server, _smtpConfiguration.Value.Port)
             {
+                EnableSsl = true,
                 Credentials =
                     new NetworkCredential(_smtpConfiguration.Value.UserName, _smtpConfiguration.Value.Password)
             };
