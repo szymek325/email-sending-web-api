@@ -53,7 +53,7 @@ namespace EmailSending.Web.Api
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", false, true)
                 .AddJsonFile($"appsettings.{environment}.json", false, true)
-                .AddJsonFile($"gmail_credentials.json", false, true);
+                .AddJsonFile("gmail_credentials.json", false, true);
         }
 
         private static ILogger GetLogger()

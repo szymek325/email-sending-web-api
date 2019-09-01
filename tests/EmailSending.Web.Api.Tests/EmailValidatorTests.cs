@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using EmailSending.Web.Api.DataAccess.Entities;
-using EmailSending.Web.Api.Validators;
+using EmailSending.Web.Api.Validation;
 using FluentAssertions;
 using FluentValidation;
 using Xunit;

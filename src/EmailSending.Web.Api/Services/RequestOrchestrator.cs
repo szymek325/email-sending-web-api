@@ -1,32 +1,35 @@
 ﻿using System;
 using System.Threading.Tasks;
+using EmailSending.Web.Api.CustomExceptions;
 using EmailSending.Web.Api.DataAccess;
 using EmailSending.Web.Api.DataAccess.Entities;
+using EmailSending.Web.Api.SmtpEmailSending;
+using EmailSending.Web.Api.Validation;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
 
 namespace EmailSending.Web.Api.Services
 {
-    public interface IEmailOrchestrator
+    public interface IRequestOrchestrator
     {
         Task SendEmail(Email email);
     }
 
-    public class EmailOrchestrator : IEmailOrchestrator
+    public class RequestOrchestrator : IRequestOrchestrator
     {
         private readonly IEmailsRepository _emailsRepository;
-        private readonly ILogger<EmailOrchestrator> _logger;
-        private readonly IMailMessageBuilder _mailMessageBuilder;
+        private readonly ILogger<RequestOrchestrator> _logger;
         private readonly ISmtpSender _smtpSender;
+        private readonly IValidationMessageFormatter _validationMessageFormatter;
         private readonly IValidator<Email> _validator;
 
-        public EmailOrchestrator(ILogger<EmailOrchestrator> logger, IEmailsRepository emailsRepository,
-            IMailMessageBuilder mailMessageBuilder, ISmtpSender smtpSender, IValidator<Email> validator)
+        public RequestOrchestrator(IEmailsRepository emailsRepository, ILogger<RequestOrchestrator> logger,
+            ISmtpSender smtpSender, IValidationMessageFormatter validationMessageFormatter, IValidator<Email> validator)
         {
-            _logger = logger;
             _emailsRepository = emailsRepository;
-            _mailMessageBuilder = mailMessageBuilder;
+            _logger = logger;
             _smtpSender = smtpSender;
+            _validationMessageFormatter = validationMessageFormatter;
             _validator = validator;
         }
 
@@ -34,11 +37,14 @@ namespace EmailSending.Web.Api.Services
         {
             var result = await _validator.ValidateAsync(email);
             if (!result.IsValid)
-                throw new ArgumentException("todo");
+            {
+                var validationMessage = _validationMessageFormatter.GetErrorMessage(result.Errors);
+                throw new InvalidInputException(validationMessage);
+            }
+
             try
             {
-                var message = _mailMessageBuilder.Create(email);
-                await _smtpSender.Send(message);
+                await _smtpSender.Send(email);
                 email.Success = true;
             }
             catch (Exception e)

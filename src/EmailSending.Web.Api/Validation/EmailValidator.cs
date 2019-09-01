@@ -1,7 +1,7 @@
 ﻿using EmailSending.Web.Api.DataAccess.Entities;
 using FluentValidation;
 
-namespace EmailSending.Web.Api.Validators
+namespace EmailSending.Web.Api.Validation
 {
     public class EmailValidator : AbstractValidator<Email>
     {

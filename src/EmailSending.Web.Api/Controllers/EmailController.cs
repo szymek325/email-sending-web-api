@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using EmailSending.Web.Api.CustomExceptions;
 using EmailSending.Web.Api.DataAccess.Entities;
 using EmailSending.Web.Api.Dto;
 using EmailSending.Web.Api.Services;
@@ -13,12 +14,12 @@ namespace EmailSending.Web.Api.Controllers
     [Route("api/v{version:apiVersion}/[controller]")]
     public class EmailController : ControllerBase
     {
-        private readonly IEmailOrchestrator _emailOrchestrator;
         private readonly ILogger<EmailController> _logger;
+        private readonly IRequestOrchestrator _requestOrchestrator;
 
-        public EmailController(IEmailOrchestrator emailOrchestrator, ILogger<EmailController> logger)
+        public EmailController(IRequestOrchestrator requestOrchestrator, ILogger<EmailController> logger)
         {
-            _emailOrchestrator = emailOrchestrator;
+            _requestOrchestrator = requestOrchestrator;
             _logger = logger;
         }
 
@@ -28,9 +29,14 @@ namespace EmailSending.Web.Api.Controllers
             var guid = Guid.NewGuid();
             try
             {
-                await _emailOrchestrator.SendEmail(new Email(guid.ToString(), dto.To, dto.CC, dto.BCC, dto.Subject,
+                await _requestOrchestrator.SendEmail(new Email(guid.ToString(), dto.To, dto.CC, dto.BCC, dto.Subject,
                     dto.Body));
                 return new OkObjectResult(new {guid});
+            }
+            catch (InvalidInputException validationException)
+            {
+                var exceptionType = validationException.GetType();
+                return new BadRequestObjectResult(new {exceptionType, validationException.Message});
             }
             catch (Exception ex)
             {

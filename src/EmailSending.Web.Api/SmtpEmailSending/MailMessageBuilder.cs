@@ -2,7 +2,7 @@
 using System.Net.Mail;
 using EmailSending.Web.Api.DataAccess.Entities;
 
-namespace EmailSending.Web.Api.Services
+namespace EmailSending.Web.Api.SmtpEmailSending
 {
     public interface IMailMessageBuilder
     {
