@@ -1,29 +1,34 @@
-﻿using System.Linq;
+﻿using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
-using EmailSending.Web.Api.DataAccess.Entities;
+using EmailSending.Web.Api.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace EmailSending.Web.Api.Services
 {
     public interface ISmtpSender
     {
-        Task Send(Email email);
+        Task Send(MailMessage mailMessage);
     }
 
-    public class SmtpSender
+    public class SmtpSender : ISmtpSender
     {
-        public async Task Send(Email email)
+        private readonly IOptions<SmtpConfiguration> _smtpConfiguration;
+
+        public SmtpSender(IOptions<SmtpConfiguration> smtpConfiguration)
         {
-            //TODO inject smtp configuratgion
-            var sm = new SmtpClient("dasdsa");
-            var mailMessage = new MailMessage();
-            email.To.ToList().ForEach(x => mailMessage.To.Add(new MailAddress(x)));
-            email.CC.ToList().ForEach(x => mailMessage.CC.Add(new MailAddress(x)));
-            email.BCC.ToList().ForEach(x => mailMessage.Bcc.Add(new MailAddress(x)));
-            mailMessage.Subject = email.Subject;
-            mailMessage.Body = email.Body;
-            mailMessage.IsBodyHtml = true;
-            await sm.SendMailAsync(mailMessage);
+            _smtpConfiguration = smtpConfiguration;
+        }
+
+        public async Task Send(MailMessage mailMessage)
+        {
+            var smtpClient = new SmtpClient(_smtpConfiguration.Value.Server, _smtpConfiguration.Value.Port)
+            {
+                Credentials =
+                    new NetworkCredential(_smtpConfiguration.Value.UserName, _smtpConfiguration.Value.Password)
+            };
+            await smtpClient.SendMailAsync(mailMessage);
+            smtpClient.Dispose();
         }
     }
 }
