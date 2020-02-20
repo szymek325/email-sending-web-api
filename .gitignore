@@ -19,3 +19,8 @@
 /bin/Debug
 /src/EmailSending.Web.Api/bin/Debug/netcoreapp3.0
 /src/EmailSending.Web.Api/obj
+/src/obj/Docker
+/src/obj/Debug
+/tests/EmailSending.Web.Api.Tests/bin/Debug/netcoreapp3.0
+/tests/EmailSending.Web.Api.Tests/obj
+/src/EmailSending.Web.Api/gmail_credentials.json

@@ -1,4 +1,10 @@
 using EmailSending.Web.Api.Configuration;
+using EmailSending.Web.Api.DataAccess;
+using EmailSending.Web.Api.DataAccess.Entities;
+using EmailSending.Web.Api.Services;
+using EmailSending.Web.Api.SmtpEmailSending;
+using EmailSending.Web.Api.Validation;
+using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
@@ -34,15 +40,21 @@ namespace EmailSending.Web.Api
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
             services.AddSwaggerGen();
 
+            services.AddTransient<IValidator<Email>, EmailValidator>();
+            services.AddTransient<IValidationMessageFormatter, ValidationMessageFormatter>();
+            services.AddTransient<IRequestOrchestrator, RequestOrchestrator>();
+            services.AddTransient<IEmailsRepository, EmailsRepository>();
+            services.Configure<SmtpConfiguration>(Configuration.GetSection(nameof(SmtpConfiguration)));
+            services.AddTransient<IMailMessageBuilder, MailMessageBuilder>();
+            services.AddTransient<ISmtpSender, SmtpSender>();
+
             RegisterDbContext(services);
         }
 
         private void RegisterDbContext(IServiceCollection services)
         {
-            services.Configure<DatabaseSettings>(
-                Configuration.GetSection(nameof(DatabaseSettings)));
-            services.AddSingleton<IDatabaseSettings>(sp =>
-                sp.GetRequiredService<IOptions<DatabaseSettings>>().Value);
+            services.Configure<DatabaseSettings>(Configuration.GetSection(nameof(DatabaseSettings)));
+            services.AddSingleton<IDatabaseSettings>(sp => sp.GetRequiredService<IOptions<DatabaseSettings>>().Value);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
